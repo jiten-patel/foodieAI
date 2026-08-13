@@ -9,6 +9,21 @@ const td = "border p-3 text-sm align-top";
 
 const PAGE_SIZE = 20;
 
+// The API sends signatures as a Postgres array literal string ({"a","b"}),
+// not a JSON array, because restaurants.signatures is a Text column holding a
+// list. Accept either shape.
+// ponytail: naive comma split — a signature containing a comma renders as two.
+function formatList(value) {
+    if (Array.isArray(value)) return value.join(', ');
+    if (typeof value !== 'string') return '';
+    return value
+        .replace(/^[{[]|[\]}]$/g, '')
+        .split(',')
+        .map((s) => s.trim().replace(/^["']|["']$/g, ''))
+        .filter(Boolean)
+        .join(', ');
+}
+
 export default function Restaurants() {
     const {
         restaurants,
@@ -125,7 +140,7 @@ export default function Restaurants() {
                                 <td className={td}>{r.food_style}</td>
                                 <td className={td}>{r.rating ?? '—'}</td>
                                 <td className={td}>{r.price_range ? '$'.repeat(r.price_range) : '—'}</td>
-                                <td className={td}>{(r.signatures ?? []).join(', ') || '—'}</td>
+                                <td className={td}>{formatList(r.signatures) || '—'}</td>
                                 <td className={td}>{r.vibe ?? '—'}</td>
                                 <td className={td}>{r.environment ?? '—'}</td>
                                 <td className={td}>
