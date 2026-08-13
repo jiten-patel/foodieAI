@@ -22,7 +22,7 @@ export default function AdminLoginPage() {
                 setError('This account does not have admin access.');
                 return;
             }
-            router.push('/admi/dashboard');
+            router.push('/admin/dashboard');
             router.refresh();
         } catch (err) {
             setError(err.message);
