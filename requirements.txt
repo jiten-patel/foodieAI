@@ -1,0 +1,39 @@
+# ─── Core framework ───────────────────────────────────────────────────────────
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+pydantic>=2.7.0
+pydantic-settings>=2.3.0
+
+# ─── LLM providers ────────────────────────────────────────────────────────────
+openai>=1.30.0
+langchain>=0.2.0
+langchain-openai>=0.1.8
+langchain-core>=0.2.0
+langchain-chroma>=0.1.2
+
+# ─── Anthropic (MCP sampling) ────────────────────────────────────────────────
+anthropic>=0.28.0
+
+# ─── MCP ──────────────────────────────────────────────────────────────────────
+fastmcp>=0.4.0
+mcp>=1.0.0
+
+# ─── Database ─────────────────────────────────────────────────────────────────
+psycopg2-binary>=2.9.9
+sqlalchemy
+alembic
+psycopg[binary]
+pyjwt
+passlib[bcrypt]
+bcrypt<4.1
+slowapi
+
+# ─── Vector DB ────────────────────────────────────────────────────────────────
+chromadb>=0.5.3
+
+# ─── Utilities ────────────────────────────────────────────────────────────────
+numpy>=1.26.0
+tenacity>=8.3.0
+python-multipart>=0.0.9     # form-data support for FastAPI
+python-dotenv>=1.0.0
+httpx>=0.27.0               # async HTTP client (used by tests / health checks)

@@ -1,0 +1,52 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: food_recommendation
+      POSTGRES_USER: food_recommendation
+      POSTGRES_PASSWORD: food_recommendation
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: unless-stopped
+    env_file: backend/.env
+    environment:
+      # Overrides backend/.env so the container talks to the `db` service,
+      # not localhost, and drops the "*" CORS fallback (see IMPLEMENTATION_PLAN.md).
+      DATABASE_URL: postgresql://food_recommendation:food_recommendation@db:5432/food_recommendation
+      CORS_ORIGINS: '["http://localhost:3000"]'
+    ports:
+      - "8000:8000"
+    volumes:
+      - chroma_data:/app/backend/.chroma_db
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+      args:
+        BACKEND_URL: http://backend:8000
+        NEXTAUTH_URL: http://localhost:3000
+        NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-}
+    restart: unless-stopped
+    environment:
+      BACKEND_URL: http://backend:8000
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+  chroma_data:

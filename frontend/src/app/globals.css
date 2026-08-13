@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #6b7280;
+  --primary: #4d643b;
+  --hover: #f5ede1;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+}
+
+/* @theme {
+  --color-primary: oklch(66.9% 0.066 132.2);
+  --color-secondary: oklch(94.9% 0.018 78.2);
+  --color-body-text-secondary: oklch(0.5386 0.0015 286.35);
+  --color-user-message: oklch(90.7% 0.044 131.5);
+  --color-ai-message: oklch(100% 0 0);
+  --color-danger: oklch(0.6413 0.242 29.38);
+  --color-warning: oklch(0.815 0.1625 82.99);
+  --color-success: oklch(0.5815 0.1613 147.42);
+  --color-dark: oklch(0.1519 0.0369 261.67);
+} */
+
+@theme {
+  --color-primary: oklch(50.8% 0.076 119.9);
+  --color-secondary: oklch(98.1% 0.034 99.8);
+  --color-body-text: oklch(0.5386 0.0015 286.35);
+  --color-user-message: oklch(31.2% 0.053 129.6);
+  --color-ai-message: oklch(75.3% 0.11 67.8);
+  --color-danger: oklch(0.6413 0.242 29.38);
+  --color-warning: oklch(0.815 0.1625 82.99);
+  --color-success: oklch(0.5815 0.1613 147.42);
+  --color-dark: oklch(0.1519 0.0369 261.67);
+  --color-primary-dark: oklch(31.2% 0.053 129.6);
+  --color-button-primary: oklch(60.9% 0.13 57.3);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0b0f19;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}

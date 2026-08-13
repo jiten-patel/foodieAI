@@ -1,0 +1,13 @@
+.git
+.claude
+.vscode
+**/__pycache__
+**/*.pyc
+.env
+backend/.env
+backend/.chroma_db
+.chroma_db
+frontend
+README.md
+IMPLEMENTATION_PLAN.md
+PIPELINE_DIAGRAM.md

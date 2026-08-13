@@ -1,0 +1,34 @@
+databases:
+  - name: food-recommendation-db
+    plan: free
+    databaseName: food_recommendation
+    user: food_recommendation
+
+services:
+  - type: web
+    name: food-recommendation-backend
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: cd backend && uvicorn api:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: JWT_SECRET_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+        # Set manually in the Render dashboard: a JSON list of your deployed
+        # Vercel origin(s), e.g. ["https://your-app.vercel.app"] — no "*",
+        # allow_credentials=True in api.py makes wildcard+cookies invalid.
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: food-recommendation-db
+          property: connectionString
